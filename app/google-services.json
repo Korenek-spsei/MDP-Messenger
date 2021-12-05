@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "834897583462",
+    "project_id": "dmp-messenger-database",
+    "storage_bucket": "dmp-messenger-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834897583462:android:640aa019cdae3710ddfca7",
+        "android_client_info": {
+          "package_name": "com.example.mdpmessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834897583462-fptrfln74h53iueo5rmn2a790nuuo7o6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQLa0J_BZHgqpup7qrbfesb9iDWLiJObA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834897583462-fptrfln74h53iueo5rmn2a790nuuo7o6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
