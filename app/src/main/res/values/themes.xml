@@ -14,8 +14,13 @@
         <!-- Customize your theme here. -->
 
     </style>
+
     <style name="Theme.MDPMessenger.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Theme.MDPMessenger.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MDPMessenger.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

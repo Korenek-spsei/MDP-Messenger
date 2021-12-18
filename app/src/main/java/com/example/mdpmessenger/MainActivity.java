@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         FUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (FUser != null){
+            //pokud už pro zřízení uživatel existuje spouští aktivitu po přihlášení
             Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
             startActivity(intent);
             finish();
@@ -37,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         Register.setOnClickListener(v -> {
+            //spouští aktivitu pro registraci
             Intent intent=new Intent(MainActivity.this,RegisterActivity.class);
             startActivity(intent);
         });
 
         Login.setOnClickListener(v -> {
+            //spouští aktivitu pro login
             Intent intent=new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         });

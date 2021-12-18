@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     EditText Email, Password;
-    Button Register,BackLogin;
+    Button Register,buttonLogin;
 
     FirebaseAuth auth;
     TextView forgot_password;
@@ -32,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Login");
         Register = findViewById(R.id.buttonRegister);
-        BackLogin = findViewById(R.id.backLogin);
+        buttonLogin = findViewById(R.id.buttonLogin);
         Email = findViewById(R.id.editEmail);
         Password = findViewById(R.id.editPassword);
         forgot_password = findViewById(R.id.forgot_password);
@@ -41,11 +40,14 @@ public class LoginActivity extends AppCompatActivity {
             //startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
         });
 
-        Register.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+
+        //spouští aktivitu pro registraci
+        Register.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)));
 
         auth= FirebaseAuth.getInstance();
 
-        BackLogin.setOnClickListener(v -> {
+        //oveři zda email a heslo odpovídají nekterému z užvatelu
+        buttonLogin.setOnClickListener(v -> {
             String txtEmail = Email.getText().toString();
             String txtPassword = Password.getText().toString();
 

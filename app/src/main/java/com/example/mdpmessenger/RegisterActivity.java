@@ -3,20 +3,14 @@ package com.example.mdpmessenger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,7 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
     EditText Email, Password, Name ;
     Button Register,BackLogin;
 
-    DatabaseReference reference;
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         Password = findViewById(R.id.editPassword);
         Name = findViewById(R.id.editName);
 
+        //připojuje zde Firebase funkce pro autentifikace
         auth=FirebaseAuth.getInstance();
 
         Register.setOnClickListener(v -> {
@@ -53,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
             String txtEmail = Email.getText().toString();
             String txtPassword = Password.getText().toString();
 
+            //kontroluje jestli jsou všechny udaje správně zadané
             if (TextUtils.isEmpty(txtEmail)|| TextUtils.isEmpty(txtPassword)|| TextUtils.isEmpty(txtUsername)){
                 Toast.makeText(RegisterActivity.this,"Some informations are missing",Toast.LENGTH_SHORT).show();
             }else if (txtPassword.length()<6){
@@ -62,31 +57,35 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void Register(final String Name, String Email,String Password){
-            auth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(task -> {
-                if(task.isSuccessful()){
-                    FirebaseUser firebaseUser = auth.getCurrentUser();
-                    assert firebaseUser != null;
-                    String userID = firebaseUser.getUid();
-                    reference = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+        //vytvoří ve Firebase Authentification uživatele s emailem a heslem přes kterého se dá pak přihlašovat
+        auth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                //zjištuje přihlášeného uživatele
+                String userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                //propojení s Firebase Database pro uložení dat o uživateli pro budoucí práci s daty. Vytváří místo pro ukládání
+                DatabaseReference reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app")
+                        .getReference().child("Users").child(userID);
 
-                    HashMap<String,String> hashMap = new HashMap<>();
-                    hashMap.put("id",userID);
-                    hashMap.put("username",Name);
-                    hashMap.put("imageURL","default");
-                    hashMap.put("status", "offline");
-                    hashMap.put("search", Name.toLowerCase());
+                //toto jsou zakladní data která budu od uživatele ukládat + přidání dat o uživateli do HashMapy
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("id", userID);
+                hashMap.put("username", Name);
+                hashMap.put("imageURL", "default");
+                hashMap.put("status", "offline");
+                hashMap.put("search", Name.toLowerCase());
 
-                    reference.setValue(hashMap).addOnCompleteListener(task1 -> {
-                        if(task1.isSuccessful()){
-                            Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-                }else {
-                    Toast.makeText(RegisterActivity.this,"Wrong Email or password",Toast.LENGTH_LONG).show();
-                }
-            });
+                //posílá hashmapu do databaze
+                reference.setValue(hashMap).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        Intent intent = new Intent(RegisterActivity.this, WelcomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            } else {
+                Toast.makeText(RegisterActivity.this, "Wrong Email or password", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
