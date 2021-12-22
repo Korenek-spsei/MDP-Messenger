@@ -1,24 +1,28 @@
 package com.example.mdpmessenger;
 
 import android.os.Bundle;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.example.mdpmessenger.databinding.ActivityBottomNavigationBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
-private ActivityBottomNavigationBinding binding;
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityBottomNavigationBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-     binding = ActivityBottomNavigationBinding.inflate(getLayoutInflater());
-     setContentView(binding.getRoot());
+        binding = ActivityBottomNavigationBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.toolbar);
+        setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
