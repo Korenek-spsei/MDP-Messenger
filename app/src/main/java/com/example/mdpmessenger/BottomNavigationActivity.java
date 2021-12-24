@@ -1,6 +1,8 @@
 package com.example.mdpmessenger;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
     private ActivityBottomNavigationBinding binding;
 
     @Override
@@ -23,6 +24,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
         binding = ActivityBottomNavigationBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.toolbar);
         setContentView(binding.getRoot());
+
+        ImageButton back_button = findViewById(R.id.back_button);
+        back_button.setOnClickListener(view -> {
+            startActivity(new Intent(BottomNavigationActivity.this,WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        });
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

@@ -6,17 +6,6 @@ plugins {
 android {
     compileSdk 30
 
-    sourceSets {
-        main {
-            res.srcDirs =
-                    [
-                            'src/main/res/layout/List_items',
-                            'src/main/res/layout',
-                            'src/main/res'
-                    ]
-        }
-    }
-
     defaultConfig {
         applicationId "com.example.mdpmessenger"
         minSdk 24
@@ -37,7 +26,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
+        dataBinding true
         viewBinding true
     }
 }
