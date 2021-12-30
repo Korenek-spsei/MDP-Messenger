@@ -71,7 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
                 hashMap.put("id", userID);
                 hashMap.put("username", Name);
                 hashMap.put("imageURL", "default");
-                hashMap.put("status", "offline");
                 hashMap.put("search", Name.toLowerCase());
 
                 //posílá hashmapu do databaze

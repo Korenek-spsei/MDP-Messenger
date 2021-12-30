@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "834897583462",
+    "firebase_url": "https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "dmp-messenger-database",
     "storage_bucket": "dmp-messenger-database.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "834897583462-b6bik3k7rn5bcq48to76otkrnnl9bv6g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mdpmessenger",
+            "certificate_hash": "4a9ff9506b561ddc4fec5309c51959bbc86a84d4"
+          }
+        },
         {
           "client_id": "834897583462-fptrfln74h53iueo5rmn2a790nuuo7o6.apps.googleusercontent.com",
           "client_type": 3

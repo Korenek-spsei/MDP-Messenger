@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/drawable/backround_left.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/drawable/backround_right.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/List_items/layout/fragment_slideshow.xml" value="0.1609375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/List_items/layout/user_item.xml" value="0.259375" />
@@ -11,7 +13,8 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activities/layout/activity_main.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activities/layout/activity_register.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activities/layout/activity_welcome.xml" value="0.259375" />
-        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.259375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activity_chat.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activity_login.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activity_main.xml" value="0.17798913043478262" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/activity_register.xml" value="0.264" />
@@ -26,6 +29,10 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/bottomNav/layout/fragment_dashboard.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/bottomNav/layout/fragment_home.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/bottomNav/layout/fragment_notifications.xml" value="0.259375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/chat_item_left.xml" value="0.259375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/chat_item_right.xml" value="0.259375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/chats_dashboard.xml" value="0.1609375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/chats_home.xml" value="0.1609375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/content_welcome.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/content_welcome1.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/fragment_dashboard.xml" value="0.259375" />
