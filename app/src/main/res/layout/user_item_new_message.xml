@@ -10,20 +10,28 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/user_image"
+        android:id="@+id/new_message_profile_image"
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/new_message_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@id/new_message_profile_image"
         android:text="@string/username"
         android:textSize="18sp"
-        android:layout_toEndOf="@id/user_image"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"/>
+        android:textStyle="bold" />
 
-
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:id="@+id/notification_image"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/new_message_username"
+        android:layout_margin="5dp"
+        android:src="@android:drawable/ic_notification_overlay"/>
 
 
 </RelativeLayout>

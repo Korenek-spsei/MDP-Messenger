@@ -17,33 +17,45 @@ import com.example.mdpmessenger.R;
 
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class NewMessageUserAdapter extends RecyclerView.Adapter<NewMessageUserAdapter.ViewHolder> {
 
-    private final Context context;
-    private final List<User> mUsers;
+    private Context context;
+    private List<User> users;
 
-    public UserAdapter(Context context, List<User> mUsers){
+    public NewMessageUserAdapter(Context context, List<User> users){
         this.context= context;
-        this.mUsers = mUsers;
+        this.users = users;
+    }
+
+    //konstruktor
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView username;
+        public ImageView profile_image;
+
+        public ViewHolder(@NonNull View itemView){
+            super(itemView);
+
+            username = itemView.findViewById(R.id.new_message_username);
+            profile_image = itemView.findViewById(R.id.new_message_profile_image);
+        }
     }
 
     //po vytvoření ViewHolderu ho naplnuje pohledem
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.user_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.user_item_new_message, parent, false);
         return new ViewHolder(view);
     }
-
 
     //vyplnuje viewHolder daty uživatelu, když objeví na obrazovce
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final User user = mUsers.get(position);
+        final User user = users.get(position);
         holder.username.setText(user.getUsername());
 
-        //po kliknutí na konkrétní view(uživatele) se spustí ChatActivity a je do ní posláno id od uživatele na kterého se kliklo
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            //po kliknutí na konkrétní view(uživatele) se spustí ChatActivity a je do ní posláno id od uživatele na kterého se kliklo
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(context, ChatActivity.class);
@@ -55,18 +67,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     //vrací kolik instanci uživatelu naplní viewHoldery
     @Override
-    public int getItemCount() { return mUsers.size(); }
-
-    //konstruktor
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView username;
-        public ImageView profile_image;
-
-        public ViewHolder(@NonNull View itemView){
-            super(itemView);
-
-            username = itemView.findViewById(R.id.username);
-            profile_image = itemView.findViewById(R.id.user_image);
-        }
+    public int getItemCount() {
+        return users.size();
     }
 }

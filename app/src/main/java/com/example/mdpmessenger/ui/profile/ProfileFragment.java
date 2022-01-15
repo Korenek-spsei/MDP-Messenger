@@ -1,6 +1,7 @@
 package com.example.mdpmessenger.ui.profile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,36 +20,36 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
 
+    TextView username;
+    ImageView profile_image;
     DatabaseReference reference;
-    FirebaseUser fuser;
-    private StorageReference storageReference;
+    FirebaseUser thisUser;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_chats,container,false);
+        View view = inflater.inflate(R.layout.fragment_profile,container,false);
 
-        TextView username = view.findViewById(R.id.profile_username);
-        ImageView profile_image = view.findViewById(R.id.profile_image);
+        username = view.findViewById(R.id.profile_username);
+        profile_image = view.findViewById(R.id.profile_image);
 
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(fuser.getUid());
+        thisUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(thisUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    username.setText(user.getUsername());
+                Log.d("DEBUG1: ",user.getUsername());
+                username.setText(user.getUsername());
 
-                    if (user.getImageURL().equals("default")){
-                        profile_image.setImageResource(R.mipmap.ic_launcher);
-                    }
+                if (user.getImageURL().equals("default")){
+                    profile_image.setImageResource(R.mipmap.ic_launcher);
                 }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

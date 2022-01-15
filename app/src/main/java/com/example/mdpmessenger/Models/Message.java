@@ -1,20 +1,20 @@
 package com.example.mdpmessenger.Models;
 
-public class Chat {
+public class Message {
 
     private String sender;
     private String receiver;
     private String message;
-    private boolean isseen;
+    private boolean isSeen;
 
-    public Chat(String sender, String receiver, String message, boolean isseen) {
+    public Message(String sender, String receiver, String message, boolean isSeen) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
-        this.isseen= isseen;
+        this.isSeen = isSeen;
     }
 
-    public Chat() {
+    public Message() {
     }
 
     public String getSender() {
@@ -41,11 +41,11 @@ public class Chat {
         this.message = message;
     }
 
-    public boolean isIsseen() {
-        return isseen;
+    public boolean isSeen() {
+        return isSeen;
     }
 
-    public void setIsseen(boolean isseen) {
-        this.isseen = isseen;
+    public void setSeen(boolean seen) {
+        this.isSeen = seen;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.mdpmessenger;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mdpmessenger.Adapters.MessageAdapter;
-import com.example.mdpmessenger.Models.Chat;
+import com.example.mdpmessenger.Models.Message;
 import com.example.mdpmessenger.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,7 +42,6 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     MessageAdapter messageAdapter;
-    List<Chat> chats;
     Intent intent;
 
     @Override
@@ -68,18 +66,17 @@ public class ChatActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        profile_image = findViewById(R.id.profile_image);
+        profile_image = findViewById(R.id.chat_profile_image);
         username = findViewById(R.id.chat_username);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
         intent = getIntent();
+
         final String userid = intent.getStringExtra("userid");
-
-
         thisUser = FirebaseAuth.getInstance().getCurrentUser();
+        //přidává jmeno uživatelele do záhlaví dle jeho id
         reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(userid);
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -88,13 +85,13 @@ public class ChatActivity extends AppCompatActivity {
                 //TODO: User image
                 readMessage(thisUser.getUid(),userid,user.getImageURL());
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
+        //pokud se zmáčkne tlačítko odešle se zpáva
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,109 +108,106 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender,String receiver, String message) {
-        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+        //vytvoří záznam zprávy do databáze
+        DatabaseReference messReference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Chats");
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
-        hashMap.put("isseen", false);
+        hashMap.put("isSeen", false);
 
-        reference.child("Chats").push().setValue(hashMap);
+        messReference.push().setValue(hashMap);
 
         final String userid = intent.getStringExtra("userid");
 
-        final DatabaseReference chatRefSender = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(thisUser.getUid()).child(userid);
+        //přidá do databáze záznam do větve Chatlists pod jeho id záznam id od uživatele kterému napsal -> tím vytvoří záznam chatu
+        DatabaseReference chatRefSender = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(thisUser.getUid()).child(userid);
         chatRefSender.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()){
-                    chatRefSender.child("id").setValue(userid);
-                }
+//                if (!snapshot.exists()){
+//                  toto mělo ukladat data hned na začatku, ale někde mi to blbne a ja fakt nevim kde. funguje to tak i tak
+//                  jen to dokola uklada stejnou proměnnou
+//                }
+
+                chatRefSender.child("id").setValue(userid);
+                chatRefSender.child("newMessage").setValue(false);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
         });
 
+        //přidá do databáze záznam svého id pod id toho komu napsal
         final DatabaseReference chatRefReciever = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(userid).child(thisUser.getUid());
         chatRefReciever.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()){
-                    chatRefReciever.child("id").setValue(thisUser.getUid());
-                }
+//                if (!snapshot.exists()){
+//
+//                }
+
+                chatRefReciever.child("id").setValue(thisUser.getUid());
+                chatRefReciever.child("newMessage").setValue(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
         });
 
-        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(thisUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-//               Here will be notification
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
+    //mění v databázi hodnotu isSeen u zpráv
     private void seenMessage(final String userid){
-        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Chats");
-        reference.addValueEventListener(new ValueEventListener() {
+        DatabaseReference seenMessRef = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Chats");
+        seenMessRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot snapshot: datasnapshot.getChildren()){
-                    Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getSender().equals(userid) && chat.getReceiver().equals(thisUser.getUid())){
+                    Message message = snapshot.getValue(Message.class);
+                    if (message.getSender().equals(userid) && message.getReceiver().equals(thisUser.getUid())){
+                        //vytvářím hashmapu k změně hodnoty isSeen v databázi. Jelikož neznám id od zprávy musím to předávat přes snapshot updateChildren
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("isseen",true);
+                        hashMap.put("isSeen",true);
                         snapshot.getRef().updateChildren(hashMap);
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+
+        //zaznamena do databaze že tento uživatel nemá žadné nové zprávy
+        DatabaseReference chatRefReciever = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(thisUser.getUid()).child(userid);
+        chatRefReciever.child("newMessage").setValue(false);
     }
 
+    //is reading messages from database
     private void readMessage(final String myid,final String userid,final String imageurl){
-        chats =new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
 
-        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chats");
-        reference.addValueEventListener(new ValueEventListener() {
+        //
+        DatabaseReference readMessRef = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chats");
+        readMessRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                chats.clear();
+                messages.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getReceiver() != null && chat.getReceiver().equals(myid) && chat.getSender().equals(userid) || chat.getReceiver() != null && chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
-                        chats.add(chat);
+                    Message message = snapshot.getValue(Message.class);
+                    //pokus se moje id nebo daného uživatele shoduje s Reciver id u zprávy a Sender je ten druhy tak se zprava přidá do listu zpráv
+                    if (message.getReceiver() != null && message.getReceiver().equals(myid) && message.getSender().equals(userid) || message.getReceiver() != null && message.getReceiver().equals(userid) && message.getSender().equals(myid)) {
+                        messages.add(message);
                     }
-
-                    messageAdapter= new MessageAdapter(ChatActivity.this, chats);
+                    //list zpráv pak zpracuje adapter který pak naplní recycleView
+                    messageAdapter= new MessageAdapter(ChatActivity.this, messages);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-    }
-
-    private void currentUser(String userid){
-        SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-        editor.putString("currentuser",userid);
-        editor.apply();
     }
 }

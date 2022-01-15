@@ -17,12 +17,6 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText Email, Password;
-    Button Register,buttonLogin;
-
-    FirebaseAuth auth;
-    TextView forgot_password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,24 +25,25 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Login");
-        Register = findViewById(R.id.buttonRegister);
-        buttonLogin = findViewById(R.id.buttonLogin);
-        Email = findViewById(R.id.editEmail);
-        Password = findViewById(R.id.editPassword);
-        forgot_password = findViewById(R.id.forgot_password);
+        Button RegisterBttn = findViewById(R.id.buttonRegister);
+        Button LoginBttn = findViewById(R.id.buttonLogin);
+        EditText Email = findViewById(R.id.editEmail);
+        EditText Password = findViewById(R.id.editPassword);
+        TextView forgot_password = findViewById(R.id.forgot_password);
 
         forgot_password.setOnClickListener(v -> {
-            //startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            //TODO: forgotpasswd
+            //startActivity(new Intent(LoginActivity.this, ));
         });
 
 
         //spouští aktivitu pro registraci
-        Register.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)));
+        RegisterBttn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)));
 
-        auth= FirebaseAuth.getInstance();
+        FirebaseAuth auth= FirebaseAuth.getInstance();
 
         //oveři zda email a heslo odpovídají nekterému z užvatelu
-        buttonLogin.setOnClickListener(v -> {
+        LoginBttn.setOnClickListener(v -> {
             String txtEmail = Email.getText().toString();
             String txtPassword = Password.getText().toString();
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mdpmessenger.Models.Chat;
+import com.example.mdpmessenger.Models.Message;
 import com.example.mdpmessenger.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,14 +22,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public static final int MSG_TYPE_LEFT= 0;
     public static final int MSG_TYPE_RIGHT= 1;
-    private Context context;
-    private List<Chat> mChat;
+    private final Context context;
+    private final List<Message> messages;
 
-    FirebaseUser fuser;
+    FirebaseUser thisUser;
 
-    public MessageAdapter(Context context, List<Chat> mChat){
+    public MessageAdapter(Context context, List<Message> mMessage){
         this.context= context;
-        this.mChat = mChat;
+        this.messages = mMessage;
     }
 
     @NonNull
@@ -46,14 +46,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Chat chat =  mChat.get(position);
-        holder.show_message.setText(chat.getMessage());
+        Message message =  messages.get(position);
+        holder.show_message.setText(message.getMessage());
 
         //TODO: User image
 
 
-        if (position == mChat.size()-1){
-            if (chat.isIsseen()){
+        if (position == messages.size()-1){
+            if (message.isSeen()){
                 holder.text_seen.setText("Seen");
             } else holder.text_seen.setText("Delivered");
         } else holder.text_seen.setVisibility(View.GONE);
@@ -61,10 +61,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mChat.size();
+        return messages.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView show_message;
         public ImageView profile_image;
 
@@ -81,8 +81,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mChat.get(position).getSender().equals(fuser.getUid())){
+        thisUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (messages.get(position).getSender().equals(thisUser.getUid())){
             return MSG_TYPE_RIGHT;
         }else return MSG_TYPE_LEFT;
     }

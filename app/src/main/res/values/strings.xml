@@ -18,4 +18,12 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="username">Username</string>
+    <string name="channel_name">Message_notification_channel</string>
+    <string name="channel_description">channel to notify</string>
+    <string name="search">Search</string>
+    <string name="password">Password</string>
+    <string name="password_again">Password again</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="register_here">Register here</string>
 </resources>

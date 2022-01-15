@@ -35,7 +35,7 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/chats_home.xml" value="0.1609375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/content_welcome.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/content_welcome1.xml" value="0.259375" />
-        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/fragment_chats.xml" value="0.1" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/fragment_chats.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/fragment_dashboard.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/fragment_gallery.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/fragment_home.xml" value="0.259375" />
@@ -46,6 +46,7 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/nav_header_welcome.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/toolbar_layout.xml" value="0.17798913043478262" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/user_item.xml" value="0.259375" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/layout/user_item_new_message.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/menu/activity_main_drawer.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/menu/activity_true_main_drawer.xml" value="0.259375" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/MDPMessenger/app/src/main/res/menu/bottom_nav_menu.xml" value="0.259375" />
