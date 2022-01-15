@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mdpmessenger.Adapters.MessageAdapter;
-import com.example.mdpmessenger.Adapters.UserAdapter;
 import com.example.mdpmessenger.Models.Chat;
 import com.example.mdpmessenger.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +35,7 @@ public class ChatActivity extends AppCompatActivity {
 
     ImageView profile_image;
     TextView username;
-    FirebaseUser fuser;
+    FirebaseUser thisUser;
     DatabaseReference reference;
 
     ImageButton btn_send;
@@ -44,11 +43,8 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     MessageAdapter messageAdapter;
-    List<Chat> mChat;
-    List<User> chatList;
+    List<Chat> chats;
     Intent intent;
-
-    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +67,6 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        chatList = new ArrayList<>();
-        recyclerView.setAdapter(new UserAdapter(ChatActivity.this, chatList, false));
 
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.chat_username);
@@ -83,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
         final String userid = intent.getStringExtra("userid");
 
 
-        fuser = FirebaseAuth.getInstance().getCurrentUser();
+        thisUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -92,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
                 User user  = datasnapshot.getValue(User.class);
                 username.setText(user.getUsername());
                 //TODO: User image
-                readMessage(fuser.getUid(),userid,user.getImageURL());
+                readMessage(thisUser.getUid(),userid,user.getImageURL());
             }
 
             @Override
@@ -105,10 +99,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: notify function
-                //notify=true;
                 String msg = text_send.getText().toString();
                 if (!msg.equals("")) {
-                    sendMessage(fuser.getUid(),userid,msg);
+                    sendMessage(thisUser.getUid(),userid,msg);
                 }else Toast.makeText(ChatActivity.this,"Cant send empty message",Toast.LENGTH_SHORT).show();
                 text_send.setText("");
             }
@@ -129,22 +122,33 @@ public class ChatActivity extends AppCompatActivity {
 
         final String userid = intent.getStringExtra("userid");
 
-        final DatabaseReference chatRef = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(fuser.getUid()).child(userid);
-        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        final DatabaseReference chatRefSender = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(thisUser.getUid()).child(userid);
+        chatRefSender.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()){
-                    chatRef.child("id").setValue(userid);
+                    chatRefSender.child("id").setValue(userid);
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
-        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(fuser.getUid());
+        final DatabaseReference chatRefReciever = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chatlist").child(userid).child(thisUser.getUid());
+        chatRefReciever.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()){
+                    chatRefReciever.child("id").setValue(thisUser.getUid());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
+
+        reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").child(thisUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -166,7 +170,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot snapshot: datasnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getSender().equals(userid) && chat.getReceiver().equals(fuser.getUid())){
+                    if (chat.getSender().equals(userid) && chat.getReceiver().equals(thisUser.getUid())){
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isseen",true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -182,20 +186,20 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void readMessage(final String myid,final String userid,final String imageurl){
-        mChat=new ArrayList<>();
+        chats =new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mChat.clear();
+                chats.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
                     if (chat.getReceiver() != null && chat.getReceiver().equals(myid) && chat.getSender().equals(userid) || chat.getReceiver() != null && chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
-                        mChat.add(chat);
+                        chats.add(chat);
                     }
 
-                    messageAdapter= new MessageAdapter(ChatActivity.this,mChat);
+                    messageAdapter= new MessageAdapter(ChatActivity.this, chats);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }

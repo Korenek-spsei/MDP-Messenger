@@ -21,12 +21,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private Context context;
     private List<User> mUsers;
-    private boolean ischat;
 
-    public UserAdapter(Context context, List<User> mUsers, boolean ischat){
+    public UserAdapter(Context context, List<User> mUsers){
         this.context= context;
         this.mUsers = mUsers;
-        this.ischat = ischat;
     }
 
     @NonNull

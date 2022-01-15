@@ -7,13 +7,13 @@
         android:title="@string/title_chats"/>
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_users"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard"/>
+        android:title="@string/title_users"/>
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_profile"
         android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="@string/title_notifications"/>
+        android:title="@string/title_profile"/>
 
 </menu>

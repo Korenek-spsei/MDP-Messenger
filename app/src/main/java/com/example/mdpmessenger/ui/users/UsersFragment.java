@@ -1,4 +1,4 @@
-package com.example.mdpmessenger.ui.dashboard;
+package com.example.mdpmessenger.ui.users;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,17 +29,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardFragment extends Fragment {
+public class UsersFragment extends Fragment {
 
     EditText search_bar;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    private List<User> mUsers = new ArrayList<>();
+    private List<User> Users = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_dashboard,container,false);
+        View view = inflater.inflate(R.layout.fragment_users,container,false);
 
 
         recyclerView = view.findViewById(R.id.user_recycle_view);
@@ -68,23 +68,21 @@ public class DashboardFragment extends Fragment {
         return view;
     }
 
-    //TODO: vybere z databaze uživale ktarý byl zadán do search_baru
     private void searchUsers(String s) {
-        final FirebaseUser fuser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("username").startAt(s).endAt(s+"\uf8ff");
-
+        final FirebaseUser thisUser = FirebaseAuth.getInstance().getCurrentUser();
+        Query query = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").orderByChild("username").startAt(s);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsers.clear();
+                Users.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    if (!user.getId().equals(fuser.getUid())) {
-                        mUsers.add(user);
+                    if (!user.getId().equals(thisUser.getUid())) {
+                        Users.add(user);
                     }
                 }
 
-                userAdapter = new UserAdapter(getContext(), mUsers, false);
+                userAdapter = new UserAdapter(getContext(), Users);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -103,20 +101,18 @@ public class DashboardFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               if (search_bar.getText().toString().equals("")) {
-                    mUsers.clear();
-                    //prochází data v databázi
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
-                        //ukzuje všechny uživatele kromě přihlášeného
-                        if (user.getId() != null && !user.getId().equals(firebaseUser.getUid())) {
-                            mUsers.add(user);
-                        }
+                Users.clear();
+                //prochází data v databázi
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User user = snapshot.getValue(User.class);
+                    //ukazuje všechny uživatele kromě přihlášeného
+                    if (user.getId() != null && !user.getId().equals(firebaseUser.getUid())) {
+                        Users.add(user);
                     }
+                }
 
-                    userAdapter = new UserAdapter(getContext(), mUsers, false);
-                    recyclerView.setAdapter(userAdapter);
-               }
+                userAdapter = new UserAdapter(getContext(), Users);
+                recyclerView.setAdapter(userAdapter);
             }
 
             @Override

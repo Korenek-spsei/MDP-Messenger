@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mdpmessenger.R;
 import com.example.mdpmessenger.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {

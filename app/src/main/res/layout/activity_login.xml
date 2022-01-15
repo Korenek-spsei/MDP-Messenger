@@ -60,7 +60,7 @@
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@color/design_default_color_primary"
             android:text="Register here "
             android:layout_marginTop="10dp"
             tools:ignore="HardcodedText" />
