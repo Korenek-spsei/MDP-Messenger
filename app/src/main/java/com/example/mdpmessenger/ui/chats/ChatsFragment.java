@@ -35,7 +35,7 @@ public class ChatsFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView newMessRrecyclerView;
     private UserAdapter userAdapter;
-    private List<User> Users;
+    private List<User> Users,nUsers;
     private List<ChatList> chats;
 
     FirebaseUser thisUser;
@@ -99,24 +99,26 @@ public class ChatsFragment extends Fragment {
 
     //dle zadaneho stringu v search baru hleda a zobrazi chaty uzivatelu ktere se shoduji se stringem
     private void searchUsers(String s) {
-        Users = new ArrayList<>();
         final FirebaseUser thisUser = FirebaseAuth.getInstance().getCurrentUser();
         //firebase query umožnuje číst změny a porovnávat je s daty v databazi
-        Query query = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").orderByChild("search").startAt(s);
+        Query query = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").orderByChild("search").startAt(s).endAt(s+"\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Users.clear();
+                nUsers.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     if (!user.getId().equals(thisUser.getUid())) {
-                        Users.add(user);
+                             Users.add(user);
                     }
                 }
-
                 userAdapter = new UserAdapter(getContext(), Users);
                 recyclerView.setAdapter(userAdapter);
+                userAdapter = new UserAdapter(getContext(), nUsers);
+                newMessRrecyclerView.setAdapter(userAdapter);
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -127,20 +129,21 @@ public class ChatsFragment extends Fragment {
 
     //projiždí záznamy v chatlistu uživatele a zobrazuje v recycleView
     private void showChats() {
-        List<User> nUsers = new ArrayList<>();
         Users = new ArrayList<>();
+        nUsers = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 Users.clear();
+                nUsers.clear();
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     for (ChatList chatList : chats) {
                         if (user.getId() != null && user.getId().equals(chatList.getId())) {
                             //naplnuje listy uživatelů podle toho jestli jejich zpravy byli videny nebo ne
-                            if(chatList.getNewMessage()){
+                            if(chatList.getNewMessage()!=null && chatList.getNewMessage()){
                                 nUsers.add(user);
                             }else
                                 Users.add(user);

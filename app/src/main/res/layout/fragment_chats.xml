@@ -39,20 +39,28 @@
         app:layout_constraintVertical_bias="0.023"
         android:inputType="textShortMessage" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/new_message_recycle_view"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/search_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:scrollbars="vertical"
-        />
+        android:nestedScrollingEnabled="true">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_recycle_view"
-        android:layout_below="@+id/new_message_recycle_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/new_message_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:scrollbars="none"
+            android:nestedScrollingEnabled="false"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_recycle_view"
+            android:layout_below="@+id/new_message_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:nestedScrollingEnabled="false"
+            />
+    </RelativeLayout>
 </RelativeLayout>

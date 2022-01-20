@@ -109,7 +109,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(String sender,String receiver, String message) {
         //vytvoří záznam zprávy do databáze
-        DatabaseReference messReference = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("Chats");
+        DatabaseReference messReference = FirebaseDatabase
+                .getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference().child("Chats");
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);

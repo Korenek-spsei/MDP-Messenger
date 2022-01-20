@@ -70,7 +70,7 @@ public class UsersFragment extends Fragment {
 
     private void searchUsers(String s) {
         final FirebaseUser thisUser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").orderByChild("username").startAt(s);
+        Query query = FirebaseDatabase.getInstance("https://dmp-messenger-database-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users").orderByChild("search").startAt(s).endAt(s+"\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

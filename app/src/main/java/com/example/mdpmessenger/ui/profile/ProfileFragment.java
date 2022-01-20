@@ -1,7 +1,6 @@
 package com.example.mdpmessenger.ui.profile;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d("DEBUG1: ",user.getUsername());
+                assert user != null;
                 username.setText(user.getUsername());
 
                 if (user.getImageURL().equals("default")){
