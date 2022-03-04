@@ -25,5 +25,7 @@
     <string name="password_again">Password again</string>
     <string name="email">Email</string>
     <string name="login">Login</string>
-    <string name="register_here">Register here</string>
+    <string name="register_here">Register</string>
+    <string name="reset">Reset</string>
+    <string name="click_to_reset_info">By clicking RESET, you will recive an email to reset your password</string>
 </resources>

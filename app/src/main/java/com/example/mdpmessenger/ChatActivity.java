@@ -32,7 +32,7 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    ImageView profile_image;
+    ImageView profile_image,profile_image_toolbar;
     TextView username;
     FirebaseUser thisUser;
     DatabaseReference reference;
@@ -49,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_chat);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,6 +67,7 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         profile_image = findViewById(R.id.chat_profile_image);
+        profile_image_toolbar = findViewById(R.id.profile_image_toolbar);
         username = findViewById(R.id.chat_username);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
@@ -84,6 +85,10 @@ public class ChatActivity extends AppCompatActivity {
                 username.setText(user.getUsername());
                 //TODO: User image
                 readMessage(thisUser.getUid(),userid,user.getImageURL());
+
+                if (user.getImageURL().equals("default")){
+                    profile_image_toolbar.setImageResource(R.mipmap.ic_launcher);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -6,26 +6,17 @@
     tools:context=".LoginActivity">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_login"
         layout="@layout/toolbar_layout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/toolbar_login"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/login"
-            android:textColor="#000"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            tools:ignore="HardcodedText" />
 
 
         <EditText
@@ -57,21 +48,21 @@
             tools:ignore="HardcodedText,TextContrastCheck" />
 
         <Button
-            android:id="@+id/buttonRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary"
-            android:text="@string/register_here"
-            android:layout_marginTop="10dp"
-            tools:ignore="HardcodedText" />
-
-        <Button
             android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/teal_700"
             android:text="@string/login"
-            android:layout_marginTop="10dp"
-            tools:ignore="HardcodedText" />
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey"
+            android:text="@string/register_here"
+            android:layout_marginTop="10dp" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,7 +73,7 @@
             android:gravity="center"
             android:layout_gravity="end"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/design_default_color_primary"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 

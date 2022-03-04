@@ -23,11 +23,11 @@ public class BottomNavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityBottomNavigationBinding.inflate(getLayoutInflater());
-        setSupportActionBar(binding.toolbar);
+        setSupportActionBar(binding.toolbarNavigation);
         setContentView(binding.getRoot());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        binding.toolbarNavigation.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BottomNavigationActivity.this,WelcomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));

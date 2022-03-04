@@ -12,10 +12,10 @@
         android:theme="@style/Theme.MDPMessenger.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_welcome"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/teal_700"
             app:popupTheme="@style/Theme.MDPMessenger.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

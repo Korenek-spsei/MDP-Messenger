@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
-    android:background="@color/design_default_color_primary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:background="@color/teal_700"
+    android:theme="@style/ThemeOverlay.AppCompat.Light"
     app:popupTheme="@style/TextAppearance.AppCompat.Menu">
 
 </androidx.appcompat.widget.Toolbar>

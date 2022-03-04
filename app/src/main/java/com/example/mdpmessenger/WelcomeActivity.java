@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         binding = ActivityWelcomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarWelcome.toolbar);
+        setSupportActionBar(binding.appBarWelcome.toolbarWelcome);
         //konfigurace tlačítka
         binding.appBarWelcome.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(new Intent(WelcomeActivity.this, BottomNavigationActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
             }
         });
+
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;

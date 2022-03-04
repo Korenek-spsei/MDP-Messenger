@@ -22,9 +22,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_login);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Login");
+
         Button RegisterBttn = findViewById(R.id.buttonRegister);
         Button LoginBttn = findViewById(R.id.buttonLogin);
         EditText Email = findViewById(R.id.editEmail);
@@ -32,8 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView forgot_password = findViewById(R.id.forgot_password);
 
         forgot_password.setOnClickListener(v -> {
-            //TODO: forgotpasswd
-            //startActivity(new Intent(LoginActivity.this, ));
+            startActivity(new Intent(LoginActivity.this,ResetPasswdActivity.class ));
         });
 
 

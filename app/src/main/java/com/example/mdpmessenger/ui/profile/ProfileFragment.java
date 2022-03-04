@@ -41,12 +41,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                assert user != null;
-                username.setText(user.getUsername());
+                if (user != null) {
+                    username.setText(user.getUsername());
+
 
                 if (user.getImageURL().equals("default")){
                     profile_image.setImageResource(R.mipmap.ic_launcher);
-                }
+                } }
             }
 
 

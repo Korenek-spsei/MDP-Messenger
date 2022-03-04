@@ -12,24 +12,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chat app"
-        android:textSize="25dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         />
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary_dark"
-        android:text="Register here "
-        android:layout_marginTop="10dp" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:background="@color/teal_700"
+        android:text="@string/login"
         android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_700"
+        android:text="@string/register_here"
+        android:layout_marginTop="10dp" />
+
+
 
 
 </LinearLayout>
