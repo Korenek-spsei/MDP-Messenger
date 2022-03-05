@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mdpmessenger.ChatActivity;
 import com.example.mdpmessenger.Models.User;
 import com.example.mdpmessenger.R;
@@ -63,6 +64,9 @@ public class NewMessageUserAdapter extends RecyclerView.Adapter<NewMessageUserAd
                 context.startActivity(intent);
             }
         });
+        if (user.getImageURL().equals("default")){
+            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+        }else Glide.with(context).load(user.getImageURL()).into(holder.profile_image);
     }
 
     //vrací kolik instanci uživatelu naplní viewHoldery

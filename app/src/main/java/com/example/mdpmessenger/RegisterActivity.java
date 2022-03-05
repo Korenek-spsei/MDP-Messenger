@@ -111,8 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-            } else {
-                Toast.makeText(RegisterActivity.this, "Wrong credentials try again", Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(RegisterActivity.this, "Wrong email or it already exist try again!", Toast.LENGTH_LONG).show();
             }
         });
     }

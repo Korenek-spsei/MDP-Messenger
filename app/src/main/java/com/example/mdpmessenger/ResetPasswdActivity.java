@@ -15,12 +15,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 
 public class ResetPasswdActivity extends AppCompatActivity {
     EditText send_email;
     Button btn_reset;
 
     FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +31,7 @@ public class ResetPasswdActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_reset_psswd);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Reset Password");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Reset Password");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         send_email = findViewById(R.id.send_email);
@@ -40,9 +43,8 @@ public class ResetPasswdActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = send_email.getText().toString();
 
-                if (email.contains("")){
-                    Toast.makeText(ResetPasswdActivity.this,"Email is required!",Toast.LENGTH_SHORT).show();
-                } else {
+                if (!email.isEmpty())
+                {
                     firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -55,6 +57,8 @@ public class ResetPasswdActivity extends AppCompatActivity {
                             }
                         }
                     });
+                }else {
+                    Toast.makeText(ResetPasswdActivity.this,"Insert correct email",Toast.LENGTH_SHORT).show();
                 }
             }
         });

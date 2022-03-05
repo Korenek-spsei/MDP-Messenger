@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_login);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Login");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button RegisterBttn = findViewById(R.id.buttonRegister);
         Button LoginBttn = findViewById(R.id.buttonLogin);
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView forgot_password = findViewById(R.id.forgot_password);
 
         forgot_password.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this,ResetPasswdActivity.class ));
+            startActivity(new Intent(LoginActivity.this,ResetPasswdActivity.class ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
         });
 
 

@@ -15,10 +15,12 @@
         tools:ignore="ExtraText">
         <activity
             android:name=".ResetPasswdActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MDPMessenger.NoActionBar"/>
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MDPMessenger.NoActionBar"/>
         <activity
             android:name=".WelcomeActivity"
             android:exported="false"
