@@ -24,12 +24,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public static final int MSG_TYPE_RIGHT= 1;
     private final Context context;
     private final List<Message> messages;
+    private String imageUrl;
 
     FirebaseUser thisUser;
 
-    public MessageAdapter(Context context, List<Message> mMessage){
+    public MessageAdapter(Context context, List<Message> mMessage,String imageUrl){
         this.context= context;
         this.messages = mMessage;
+        this.imageUrl = imageUrl;
     }
 
     @NonNull
@@ -42,21 +44,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             View view = LayoutInflater.from(context).inflate(R.layout.chat_item_left, parent, false);
             return new ViewHolder(view);
         }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Message message =  messages.get(position);
-        holder.show_message.setText(message.getMessage());
-
-        //TODO: User image
-
-
-        if (position == messages.size()-1){
-            if (message.isSeen()){
-                holder.text_seen.setText("Seen");
-            } else holder.text_seen.setText("Delivered");
-        } else holder.text_seen.setVisibility(View.GONE);
     }
 
     @Override
@@ -74,9 +61,26 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
-            profile_image = itemView.findViewById(R.id.profile_image);
+            profile_image = itemView.findViewById(R.id.chat_profile_image);
             text_seen = itemView.findViewById(R.id.txt_seen);
         }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Message message =  messages.get(position);
+        holder.show_message.setText(message.getMessage());
+
+//        if (imageUrl.equals("default")){
+//            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+//        }else Glide.with(context).load(imageUrl).into(holder.profile_image);
+
+
+        if (position == messages.size()-1){
+            if (message.isSeen()){
+                holder.text_seen.setText("Seen");
+            } else holder.text_seen.setText("Delivered");
+        } else holder.text_seen.setVisibility(View.GONE);
     }
 
     @Override

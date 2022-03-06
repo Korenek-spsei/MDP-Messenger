@@ -150,10 +150,6 @@ public class ChatActivity extends AppCompatActivity {
         chatRefReciever.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (!snapshot.exists()){
-//
-//                }
-
                 chatRefReciever.child("id").setValue(thisUser.getUid());
                 chatRefReciever.child("newMessage").setValue(true);
             }
@@ -207,7 +203,7 @@ public class ChatActivity extends AppCompatActivity {
                         messages.add(message);
                     }
                     //list zpráv pak zpracuje adapter který pak naplní recycleView
-                    messageAdapter= new MessageAdapter(ChatActivity.this, messages);
+                    messageAdapter= new MessageAdapter(ChatActivity.this, messages,imageurl);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }

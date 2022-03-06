@@ -65,14 +65,11 @@ public class RegisterActivity extends AppCompatActivity {
                         newUser=false;
                     }
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError error) { }
             });
 
-            //kontroluje jestli jsou všechny udaje správně zadané
+            //kontroluje jestli jsou všechny udaje správně zadané pokud ano spustí registraci
             if (TextUtils.isEmpty(txtEmail)|| TextUtils.isEmpty(txtPassword) || TextUtils.isEmpty(txtPasswordCheck) || TextUtils.isEmpty(txtUsername)){
                 Toast.makeText(RegisterActivity.this,"Some informations are missing",Toast.LENGTH_SHORT).show();
             }else if (txtPassword.length()<6){

@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         RegisterBttn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)));
 
         FirebaseAuth auth= FirebaseAuth.getInstance();
-
         //oveři zda email a heslo odpovídají nekterému z užvatelu
         LoginBttn.setOnClickListener(v -> {
             String txtEmail = Email.getText().toString();
